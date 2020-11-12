@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 11 10:51:33 2020
+
+@author: vishali
+"""
+
+import axelrod as axe
+import random
+
+class Player:
+    def __init__(self,name = False):
+        pass
+    
+class HumanPlayer:
+    def __init__ (self, otherStrategy, name = False):
+       self.otherStrategy = axe.Human()
+       self.name = name
+
+class Compstrategy(Player):
+    def __init__ (self, strategies):
+        self.strategies = strategies
+        
+        def strategies (self):  
+            
+            class player1(Compstrategy):
+                self.player1 = axe.TitForTat()
+                
+            class player2(Compstrategy):
+                self.player2 = axe.Defector()
+            
+            class player3(Compstrategy):
+                self.player3 = axe.Cooperator()
+            
+            class player4(Compstrategy):
+                self.player4 = axe.GrudgerAlternator()
+            
+            class player5(Compstrategy):
+                self.player5 = axe.Grudger()
+            
+
+
+        A = player1()
+        B = player2()
+        C = player3()
+        D = player4()
+        E = player5()    
+        human = HumanPlayer()
+
+
+
+        playerlist = [A, B, C, D, E]
+        compstrategylist = random.choice(playerlist) 
+        print(compstrategylist)
+
+
+class Match():
+    """ Repeated game between computer and human """
+    def _init_(self, Compstrategy, HumanPlayer, match):
+        self.Compstrategy = Compstrategy
+        self.HumanPlayer = HumanPlayer
+        self.match = axe.Match()
+
+        
+    def match():
+        players = [compstrategylist, human]
+        match = axe.Match(players = [A,B], turns =5)
+        
+
+match.play()  
+        
+        
+
+        
