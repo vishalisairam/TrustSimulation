@@ -7,6 +7,11 @@ Created on Sat Nov 28 10:45:07 2020
 """
 import random
 
+def transpose(seqseq): #simple 2-dimensional transpose
+    """Return transpose of `seqseq`."""
+    return zip(*seqseq)
+
+
 class RandomMover:
     def move(self):
         return random.uniform(0,1) < 0.5
@@ -32,8 +37,7 @@ class humanmover:
             print("You chose to cooperate")
         elif move == 0:
             print("You chose to defelect")
-        else:
-            print("invalid move")
+
 
 
 class SimpleGame:
@@ -59,7 +63,7 @@ class SimpleGame:
         # transpose to get a payoff sequence for each player
         pay1, pay2 = transpose(payoffs)
         # return a mapping of each player to its mean payoff
-        return { player1:mean(pay1), player2:mean(pay2) }
+        return { player1:sum(pay1), player2:sum(pay2) }
     
 ## GAME: RandomMover
 # create a payoff matrix and two players
