@@ -21,20 +21,20 @@ class humanmover:
             print("You chose to defelect")
 
 class SimpleGame:
-    def __init__(self, player1,  human, payoffmat):
+    def __init__(self, player1,  player2, payoffmat):
         # initialize instance attributes
-        self.players = [ player1, human ]
+        self.players = [ player1, player2 ]
         self.payoffmat = payoffmat
         self.history = list()
     def run(self, game_iter=5):
         # unpack the two players
-        player1, human = self.players
+        player1, player2 = self.players
         # each iteration, get new moves and append these to history
         for iteration in range(game_iter):
-            newmoves = player1.move(self), human.strat(self)
+            newmoves = player1.move(self), player2.strat(self)
             self.history.append(newmoves)
         # prompt players to record the game played (i.e., 'self')
-        player1.record(self); human.record(self)
+        player1.record(self); player2.record(self)
     def payoff(self):
         # unpack the two players
         player1, player2 = self.players
@@ -60,12 +60,13 @@ class SimplePlayer:
         self.games_played.append(game)
         opponent = game.opponents[self]
         self.players_played.append(opponent)
-        
+    def strat(self,game):
+        #assign input values
+        return self.playertype.strat(self,game)
 
 class CDIPlayerType:
-    def __init__(self, p_cdi=(0.5,0.5,0.5), p_human = (0.5,0.5,0.5)):
+    def __init__(self, p_cdi=(0.5,0.5,0.5)):
         self.p_cdi = p_cdi
-        self.p_human = p_human
     def move(self, player, game):
         # get opponent and learn her last move
         opponent = game.opponents[player]
@@ -79,13 +80,12 @@ class CDIPlayerType:
     def strat(self, human, game):
         answer = input("What is your response?: ")
         if answer == "C":
-            p_human = (0.0,0.0,0.0)
+            p_cdi = (0.0,0.0,0.0)
         elif answer == "D":
-            p_human = (1.0,1.0,1,0)
+            p_cdi = (1.0,1.0,1,0)
         else:
             print(" Please enter a correct respose")
-            answer = input("What is your response?: ")
-        return random.uniform(0,1) < self.p_human
+ 
     
 class CDIGame(SimpleGame):
     def __init__(self, player1, player2, payoffmat):
@@ -106,8 +106,8 @@ class CDIGame(SimpleGame):
 ## GAME: CDIGame with SimplePlayer
 # create a payoff matrix and two players (with playertypes)
 PAYOFFMAT = [ [(3,3),(0,5)] , [(5,0),(1,1)] ]
-ptype1 = CDIPlayerType()
-ptype2 = CDIPlayerType()
+ptype1 = CDIPlayerType((1.0,1.0,1.0))
+ptype2 = CDIPlayerType((0.5, 0.0,0.5))
 player1 = SimplePlayer(ptype1)
 player2 = SimplePlayer(ptype2)
 # create and run the game
