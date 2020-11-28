@@ -31,7 +31,7 @@ class SimpleGame:
         player1, human = self.players
         # each iteration, get new moves and append these to history
         for iteration in range(game_iter):
-            newmoves = player1.move(self), human.move(self)
+            newmoves = player1.move(self), human.strat(self)
             self.history.append(newmoves)
         # prompt players to record the game played (i.e., 'self')
         player1.record(self); human.record(self)
@@ -60,6 +60,7 @@ class SimplePlayer:
         self.games_played.append(game)
         opponent = game.opponents[self]
         self.players_played.append(opponent)
+        
 
 class CDIPlayerType:
     def __init__(self, p_cdi=(0.5,0.5,0.5), p_human = (0.5,0.5,0.5)):
