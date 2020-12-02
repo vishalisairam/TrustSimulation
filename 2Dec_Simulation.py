@@ -247,7 +247,7 @@ class GameRound:
     
 
 
-PAYOFFMAT = [ [(3,3),(0,5)] , [(5,0),(1,1)] ]  
+PAYOFFMAT = [ [(3,3),(0,5)],[(5,0),(1,1)] ]  
 
 listoftotalturns = list(range(0,totalturns))
 
