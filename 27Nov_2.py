@@ -18,7 +18,7 @@ import matplotlib as mp
 #grud_perc = int(input("Please enter a number: "))
 #titfortat_perc = int(input("Please enter a number: "))
 
-numberturns = int(input("Please enter a number of turns "))
+# numberturns = int(input("Please enter a number of turns "))
 
 # initial variables
 
@@ -28,6 +28,34 @@ def transpose(seqseq): #simple 2-dimensional transpose
 
 
 # Games
+
+
+# class humanmover:
+#     def strat(self):
+#         move = input("Select a move: 1 or 0")
+#         if move == 1:
+#             print("You chose to cooperate")
+#         elif move == 0:
+#             print("You chose to defelect")
+#         else:
+#             print("invalid move")
+
+
+# class HumanPlayer:
+#     def __init__(self,name, p = 0.5):
+#         self.name = name
+#         self.p_defect = p
+    
+#     def walk(self, game):
+#         answer = input("What is your response?: ")
+#         if answer == "C":
+#             p_defect = 0
+#         elif answer == "D":
+#             p_defect = 1
+#         else:
+#             print(" Please enter a correct respose")
+#             answer = input("What is your response?: ")
+#         return random.uniform(0,1) < self.p_defect
 
 # Simple Game
 
@@ -71,12 +99,14 @@ class SimpleGame:
         # unpack the two players
         player1, player2 = self.players
         # each iteration, get new moves and append these to history
-        game_iter  = numberturns
+        game_iter  = 5
         for iteration in range(game_iter):
-            newmoves = player1.move(self), player2.move(self)
+            newmoves = player1.move(self), player2.strat(self)
             self.history.append(newmoves)
         # prompt players to record the game played (i.e., 'self')
         player1.record(self); player2.record(self)
+        
+        
     def payoff(self):
         """
         
@@ -127,7 +157,7 @@ class SimplePlayer:
 
         Returns
         -------
-        it resets the entire thing - their moves and everything
+    
 
         """
         self.games_played = list()   #empty list
@@ -154,22 +184,80 @@ class SimplePlayer:
         self.players_played.append(opponent)
         
         
+# class CDIPlayerType:
+#     def __init__(self, p_cdi=(0.5,0.5,0.5)):
+#         """
+#         So a CDI Player is actually a type of simple player
+
+#         Parameters
+#         ----------
+#         p_cdi : TYPE, optional
+#             DESCRIPTION. The default is (0.5,0.5,0.5).
+
+#         Returns
+#         -------
+#         None.
+
+#         """
+#         self.p_cdi = p_cdi
+#     def move(self, player, game):
+#         # get opponent and learn her last move
+#         opponent = game.opponents[player]
+#         last_move = game.get_last_move(opponent)
+#         # respond to opponent's last move
+#         if last_move is None:
+#             p_defect = self.p_cdi[-1]
+#         else:
+#             p_defect = self.p_cdi[last_move]
+#         return random.uniform(0,1) < p_defect
+    
+# class HumanPlayer(CDIPlayerType):
+#    def __init__(self,name, p_cdi = (0.5, 0.5, 0,5)):
+#       self.name = name
+#       self.p_cdi = p_cdi
+    
+#    def move(self, game):
+#         answer = input("What is your response?: ")
+#         if answer == "C":
+#             p_cdi = (0.0,0.0,0.0)
+#         elif answer == "D":
+#             p_cdi = (1.0,1.0,1,0)
+#         else:
+#             print(" Please enter a correct respose")
+#             answer = input("What is your response?: ")
+#         return random.uniform(0,1) < self.p_cdi
+
+
+# class CDIPlayerType:
+#     def _init_(self, p_cdi=(0.5,0.5,0.5), p_human = (0.5,0.5,0.5)):
+#         self.p_cdi = p_cdi
+#         self.p_human = p_human
+#     def move(self, player, game):
+#         # get opponent and learn her last move
+#         opponent = game.opponents[player]
+#         last_move = game.get_last_move(opponent)
+#         # respond to opponent's last move
+#         if last_move is None:
+#             p_defect = self.p_cdi[-1]
+#         else:
+#             p_defect = self.p_cdi[last_move]
+#         return random.uniform(0,1) < p_defect
+#     def strat(self, human, game):
+#         answer = input("What is your response?: ")
+#         if answer == "C":
+#             p_human = (0.0,0.0,0.0)
+#         elif answer == "D":
+#             p_human = (1.0,1.0,1,0)
+#         else:
+#             print(" Please enter a correct respose")
+#             answer = input("What is your response?: ")
+#         return random.uniform(0,1) < self.p_human
+
+
 class CDIPlayerType:
-    def __init__(self, p_cdi=(0.5,0.5,0.5)):
-        """
-        So a CDI Player is actually a type of simple player
-
-        Parameters
-        ----------
-        p_cdi : TYPE, optional
-            DESCRIPTION. The default is (0.5,0.5,0.5).
-
-        Returns
-        -------
-        None.
-
-        """
+    def _init_(self, p_cdi=(0.5,0.5,0.5)):
         self.p_cdi = p_cdi
+        
     def move(self, player, game):
         # get opponent and learn her last move
         opponent = game.opponents[player]
@@ -181,47 +269,32 @@ class CDIPlayerType:
             p_defect = self.p_cdi[last_move]
         return random.uniform(0,1) < p_defect
     
-class HumanPlayer(CDIPlayerType):
-    def __init__(self,name):
-        self.name = name
-    
-    def move(self, game):
+    def strat(self, human, game,  p_human = (0.0,0.0,0.0)):
         answer = input("What is your response?: ")
-        if answer == "C":
-            p_defect = self.p_cdi[0]
+        if last_move is None:
+            if answer == "C":
+                p_defect = self.p_human[-1]
+            else:
+                p_defect = 1
         else:
-            p_defect = self.p.cdi[1]
-        return random.uniform(0,1) < p_defect
-    
-
-
-
-
-# Random Player
-
-# class RandomPlayer:
-#     def __init__(self, p=0.5):
-#         self.p_defect = p
-#     def move(self, game):
-#         return random.uniform(0,1) < self.p_defect
-#     def record(self, game):
-#         pass
-
-
-
+            if answer == "C":
+                p_defect = 0
+            else:
+                p_defect = 1
+        return random.uniform(0,1) < self.p_human
     
 # Now let us instantiate this
 
 PAYOFFMAT = [ [(3,3),(0,5)] , [(5,0),(1,1)] ]
 
 
-playercoop = CDIPlayerType((0.0,0.0,0,))
+playercoop = CDIPlayerType(p_cdi = (0.0,0.0,0.0))
 playerdefect = CDIPlayerType((1.0,1.0,1.0))
 playergrud = CDIPlayerType((0.2,1.0,0.0))
 playerantigrud = CDIPlayerType((0.2,1,0.0,1.0))
 playertft = CDIPlayerType((0.0,1.0,0.5))
 playerrandom = CDIPlayerType((0.5,0.5,0.5))
-vish = HumanPlayer("vish")
+vish = CDIPlayerType()
 
 
 
@@ -237,8 +310,8 @@ sp_playerrandom = SimplePlayer(playerrandom)
 sp_playerhuman = SimplePlayer(vish)
 
 
-PAYOFFMAT = [ [(3,3),(0,5)] , [(5,0),(1,1)] ]
-game = CDIGame(sp_playercoop, sp_playerhuman, PAYOFFMAT)
+PAYOFFMAT = [ [(3,3), (0,5)] , [(5,0),(1,1)] ]
+game = CDIGame(sp_playercoop, vish, PAYOFFMAT)
 game.run()
 
 
@@ -259,8 +332,6 @@ list_grud = list(range(1,perc_grud*10))
 list_antigrud = list(range(1,perc_antigrud*10))
 list_tft = list(range(1,perc_tft*10))
 list_random = list(range(1,perc_random*10))
-
-
 
 
 player_list = []
