@@ -18,7 +18,7 @@ C. However, we struggled with merging the final game and simulation codes with t
 
 
 
-Python Blueprint
+Python Blueprint (Blueprint for midterm submission)
 
 Game Blueprint
 
