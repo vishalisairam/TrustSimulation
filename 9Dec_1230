@@ -7,20 +7,19 @@ Created on Wed Dec  2 07:34:24 2020
 """
 
 import random
+import numpy as np
+import matplotlib.pyplot as plt
 
 numberturns = 1
-# initial variables
 
 def transpose(seqseq): 
     """Return transpose of `seqseq`."""
     return zip(*seqseq)
 
-
-# Games
-
 # Simple Game
 
 class SimpleGame:
+    
     def __init__(self, player1, player2, payoffmat):
         # initialize instance attributes
         self.players = [ player1, player2 ]
@@ -92,27 +91,13 @@ class CDIPlayerType:
         else:
             p_defect = self.p_cdi[last_move]
         return random.uniform(0,1) < p_defect
-
-
-def random_choice_of(players):
-    """Return all of players as random pairs."""
-    # copy player list
-    players = player_list
-    # shuffle the new player list in place
-    random.shuffle(players)
-    # yield the shuffled players, 2 at a time
-    player_iter = iter(players)
-    return zip(player_iter)
-    
  
     
- 
-    
-playercoop = CDIPlayerType((0.2,0.2,0.2))
+playercoop = CDIPlayerType((0.3,0.3,0.3))
 playerdef = CDIPlayerType((0.8,0.7,0.7))
 playerrandom = CDIPlayerType((0.5,0.5,0.5))
-playergrudger = CDIPlayerType((0.3, 0.7, 0.7))
-playertft = CDIPlayerType((0.2,0.8,0.7))
+playergrudger = CDIPlayerType((0.4, 0.7, 0.7))
+playertft = CDIPlayerType((0.4,0.8,0.7))
 
 # create a new player type
 
@@ -125,7 +110,7 @@ s_tft = SimplePlayer(playertft)
 player_list = [s_coop, s_def, s_grudger, s_random, s_tft]
     
 
-PAYOFFMAT = [ [(3,3),(0,5)] , [(5,0),(1,1)] ]
+PAYOFFMAT = [ [(2,2),(0,4)] , [(4,0),(1,1)] ]
 
 #totalturns = int(input("Please enter a number of turns."))
 totalturns = 5
@@ -162,9 +147,12 @@ def coop_game():
         total_human_coop = total_human_coop + human_score_coop[ele]
     
     print("The total payoffs earned by the computer player is: ", total_coop)
-    print("The total payoffs earned by the you is: ", total_human_coop)      
+    print("The total payoffs earned by the you is: ", total_human_coop) 
+    number = [20,18,16,14,12,10,8,6,4,2,0]
+    object_coop = [total_coop, total_human_coop]
+    plt.bar(object_coop, number, align= "center")     
 
-
+coop_game()
 
 def def_game():
     print("You are playing with Player B!")
@@ -229,7 +217,7 @@ def random_game():
     print("The total payoffs earned by the computer player is: ", total_random)
     print("The total payoffs earned by the you is: ", total_human_random) 
      
-random_game()      
+
 
 def tft_game():
     print("You are playing with Player D!")
@@ -294,12 +282,23 @@ def grud_game():
     
 
 
-def run_functions_in_random_order(funcs):
-    functions = list(funcs)
-    random.shuffle(functions)
-    for func in functions:
-        func()
-        print("You are playing a new game now")
+# def run_functions_in_random_order(funcs):
+#     functions = list(funcs)
+#     random.shuffle(functions)
+#     for func in functions:
+#         func()
 
-functions_game = [coop_game(), def_game(), random_game(), tft_game()]        
-run_functions_in_random_order(functions_game)
+functions_game = [coop_game(), def_game(), random_game(), tft_game(), grud_game()]        
+# run_functions_in_random_order(functions_game)
+
+def run(funcs): 
+    functions_game = [coop_game(), def_game(), random_game(), tft_game(), grud_game()] 
+    random.shuffle(functions_game)
+    for func in random.shuffle(functions_game):
+        func
+
+run(functions_game)
+
+# Final Result
+
+# print("In the game against Cooperator player, you scored", coop_game().human_score_coop, "while the Cooperator scored", coop_game().coop_score )

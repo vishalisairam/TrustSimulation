@@ -17,29 +17,22 @@ Created on Mon Nov 30 08:08:01 2020
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-from enum import Enum
-# from itertools import izip
 
 #totalturns = int(input("Please enter a number of turns."))
 totalturns = 1
+numberturns = 1
 
-
-numberturns = 5
-# initial variables
 
 def transpose(seqseq): #simple 2-dimensional transpose
     """Return transpose of `seqseq`."""
     return zip(*seqseq)
-
-
-# Games
 
 # Simple Game
 
 class SimpleGame:
     def __init__(self, player1, player2, payoffmat):
         # initialize instance attributes
-        self.players = [ player1, player2 ]
+        self.players = [ player1, player2]
         self.payoffmat = payoffmat
         self.history = list()
     def run(self, game_iter=5):
@@ -123,6 +116,7 @@ def random_pairs_of(players):
     player_iter = iter(players)
     return zip(player_iter, player_iter)
 
+
 def random_pair(players):
     for i in players:
         players = player_list
@@ -131,6 +125,7 @@ def random_pair(players):
         player_iter = iter(players)
         player_iter_2 = next(iter(players))
         return zip(player_iter,player_iter_2)
+
             
 class GamePlayer(SimplePlayer):
     def evolve(self):
@@ -144,25 +139,14 @@ class GamePlayer(SimplePlayer):
     def get_type(self):
         return (self.playertype for game in self.games_played)
     def choose_next_type(self):
-        # find the playertype(s) producing the highest score(s)
-        # choose randomly from these best playertypes
         self.next_playertype = random.shuffle(player_list), random.shuffle(player_list)
-
-
-
-
-# def select_playertypes(player):
-#     other_types = [player.playertype]
-#     for opponont in player.players_played:
-#         other_types = random.shuffle([opponent.playertype])
-#     return other_types
-
 
 
 playercoop = CDIPlayerType((0.2,0.3,0.5), "Cooperator")
 playerdefect = CDIPlayerType((0.5,0.8,1.0), "Defector")
 playerrandom = CDIPlayerType((0.1,0.2,0.6), "Random")
-
+playergrudger = CDIPlayerType((0.2,0.8,0.5), "Grudger")
+playertft = CDIPlayerType((0.0,1.0,0.5), "Tit for Tat")
 
 
 sp_playercoop = GamePlayer(playercoop)
@@ -171,18 +155,28 @@ sp_playerdefect = GamePlayer(playerdefect)
 sp_playerdefect.playertype == "Defector"
 sp_playerrandom = GamePlayer(playerrandom)
 sp_playerrandom.playertype == "Random"
+sp_playergrud = GamePlayer(playergrudger)
+sp_playergrud.playertype == "Grudger"
+sp_playertft = GamePlayer(playertft)
+sp_playertft.playertype == "Tit for Tat"
 
-perc_coop = 1
-perc_defect = 1
-perc_random = 1    
+
+perc_coop = 2
+perc_defect = 2
+perc_random = 2
+perc_grudger = 2
+perc_tft = 2
 
 list_coop = list(range(1,(perc_coop*10+ 1)))
 list_defect = list(range(1,(perc_defect*10+1)))
 list_random = list(range(1,(perc_random*10+1)))
+list_grudger = list(range(1,(perc_grudger*10+1)))
+list_tft = list(range(1,(perc_tft*10+1)))
 
 
 player_list = []
 
+len(player_list)
 
 
 for  i in list_coop:
@@ -197,67 +191,135 @@ for  i in list_random:
     sp_playerrandom_i = GamePlayer(playerrandom)
     player_list.append(sp_playerrandom_i)
     sp_playerrandom_i.playertype == "Random"
+for  i in list_grudger:
+    sp_playergrud_i = GamePlayer(playergrudger)
+    player_list.append(sp_playergrud_i)
+    sp_playergrud_i.playertype == "Grudger"
+for  i in list_tft:
+    sp_playertft_i = GamePlayer(playertft)
+    player_list.append(sp_playertft_i)
+    sp_playertft_i.playertype == "Tit for Tat"
 
 
 len(player_list)        
      
-class GameRound:
-    def __init__(self, players, payoffmat):
-        self.players = players
-        self.payoffmat = payoffmat
-
-    def run(self):
-        payoff_matrix = self.payoffmat
-        for player1, player2 in random_pairs_of(self.players):
-        
-            game = CDIGame(player1, player2, payoff_matrix)
-            game.run()
-            payoffs = game.payoff()
-            player1.get_type()
-            player2.get_type()
-            print ("Player1 payoff: ", payoffs[player1])
-            print ("Player2 payoff: ", payoffs[player2])
-            
-            
-    
-
 
 PAYOFFMAT = [ [(3,3),(0,5)],[(5,0),(1,1)] ]  
+
+
+
+totalturns = 2
+
+
 
 listoftotalturns = list(range(0,totalturns))
 
 for i in listoftotalturns: 
+    
+    player1dict = {}
+    player2dict = {}
+    
+    global listscorecoop
+    global coop_score
+    listscorecoop = []
+    coop_score = 0
+    
+    
+    global listscoredef
+    global def_score
+    listscoredef = []
+    def_score = 0
+    
+    
+    
+    global listscorerandom
+    global random_score
+    listscorerandom = []
+    random_score = 0
+    
+    
+    global listscoretft
+    global tft_score
+    listscoretft = []
+    tft_score = 0
+    
+    
+    
+    global listscoregrud
+    global grud_score
+    listscoregrud = []
+    grud_score = 0
+    
+    
     for player1, player2 in random_pairs_of(player_list):
+        print("This is a new game")
         game = CDIGame(player1, player2, PAYOFFMAT)
         game.run()
         payoffs = game.payoff()
+        
+        player1dict[player1.playertype] = (payoffs[player1])
+        player2dict[player2.playertype] = (payoffs[player2])
         print ("Player1 payoff: ", (payoffs[player1]))
         print ("Player2 payoff: ", (payoffs[player2]))
-        print(player1.playertype)
-        print(player2.playertype)
-        # for i in game.run():
-        #    payoff1 = []
-        #    payoff2 = [] 
-        #    payoff1.append(payoffs[player1])
-        #    payoff2.append(payoffs[player2])       
-        #    print(payoff1)
-        #    print(payoff2) 
+        print("This player is a", player1.playertype)
+        print("This player is a", player2.playertype)
         
-       
+        if str(player1.playertype) == "Cooperator":
+            listscorecoop.append(payoffs[player1])
+        elif str(player2.playertype) == "Cooperator":
+            listscorecoop.append(payoffs[player2])
+        for ele in range(0, len(listscorecoop)):
+            coop_score = coop_score + listscorecoop[ele]
+            
+        if str(player1.playertype) == "Defector":
+            listscoredef.append(payoffs[player1])
+        elif str(player2.playertype) == "Defector":
+            listscoredef.append(payoffs[player2])
+        for ele in range(0, len(listscoredef)):
+            def_score = def_score + listscoredef[ele]
+            
+        if str(player1.playertype) == "Random":
+            listscorerandom.append(payoffs[player1])
+        elif str(player2.playertype) == "Random":
+            listscorerandom.append(payoffs[player2])
+        for ele in range(0, len(listscorerandom)):
+            random_score = random_score + listscorerandom[ele]
+            
+            
+        if str(player1.playertype) == "Tit for Tat":
+            listscoretft.append(payoffs[player1])
+        elif str(player2.playertype) == "Tit for Tat":
+            listscoretft.append(payoffs[player2])
+        for ele in range(0, len(listscoretft)):
+            tft_score = tft_score + listscoretft[ele]
         
-        
+            
+        if str(player1.playertype) == "Grudger":
+            listscoregrud.append(payoffs[player1])
+        elif str(player2.playertype) == "Grudger":
+            listscoregrud.append(payoffs[player2])
+        for ele in range(0, len(listscoregrud)):
+            grud_score = grud_score + listscoregrud[ele]
+            
 
 
-    
+
+print(coop_score)
+print(def_score)
+print(random_score)
+print(tft_score)
+print(grud_score)
+
+t = [coop_score, def_score, random_score, tft_score, grud_score]
+t_pos = [i for i, _ in enumerate(t)]
+
+plt.bar(t_pos, t, color='green')
+plt.xlabel("Payoff")
+plt.ylabel("Players")
+plt.title("Payoffs across Players")
+plt.show()
 
 
-# coop_payoff = 0
-#         def_payoff = 0
-#         if player1.playertype == "Cooperator":
-#             coop_payoff += payoffs[player1]
-#         elif player2.playertype == "Cooperator":
-#             coop_payoff += payoffs[player2]
-#         if player1.playertype == "Defector":
-#             def_payoff = def_payoff + payoffs[player1]
-#         elif player2.playertype == "Defector":
-#             def_payoff += payoffs[player2]
+
+         
+
