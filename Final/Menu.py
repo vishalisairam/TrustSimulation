@@ -9,24 +9,24 @@ Created on Sat Dec 12 12:20:54 2020
 import pygame
 import pygame.freetype
 from pygame.sprite import Sprite
-import pygame_menu
 from enum import Enum
 from pygame.sprite import RenderUpdates
 
 
 # 2 - Importing graphics and font
 RED = (250, 75, 75)
+BLACK = (0,0,0)
 player = pygame.image.load("Content/Graphics/dude.png")
 war = pygame.image.load("Content/Graphics/war.png")
 
-#3 Making a surface that will accept text input
+#3 - Making a surface that will accept text input
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
     """ Returns surface with text written on """
     font = pygame.freetype.SysFont("Copperplate", font_size, bold=True)
     surface, _ = font.render(text=text, fgcolor=text_rgb, bgcolor=bg_rgb)
     return surface.convert_alpha()
 
-#4 Defining what the text will look like and how it would respond to the mouse
+#4 - Defining what the text will look like and how it would respond to the mouse
 class nextMove(Sprite):
     "A user interface element being added to the game screen"
     def __init__(self, center_position, text, font_size, bg_rgb, text_rgb, action=None):
@@ -83,7 +83,7 @@ class nextMove(Sprite):
         """ Draws element onto a surface """
         surface.blit(self.image, self.rect) 
         
-#5 Defining the elements on the screen
+#5 - Defining the elements on the screen
 class GameState(Enum):
     Quit = -1
     Title = 0
@@ -91,7 +91,7 @@ class GameState(Enum):
     Aboutpage = 2
     Simulation = 3
 
-#5 Initialising pygame
+#6 - Initialising pygame
 def main():
     pygame.init()
     width, height = 640, 480
@@ -112,7 +112,7 @@ def main():
             pygame.quit()
             return
 
-
+# Making a function for the while loop executing pygame to avoid repetition
 def game_loop(screen, buttons):
     """ Handles game loop until an action is return by a button in the
     buttons sprite renderer.
@@ -134,6 +134,7 @@ def game_loop(screen, buttons):
        
         pygame.display.flip()
 
+# Defining elements and actions on the main menu
 def title_screen(screen):
     welcome_btn = nextMove(
         center_position = (300,100), 
@@ -184,7 +185,7 @@ def title_screen(screen):
     
     return game_loop(screen, buttons)
 
-
+# defining elements and actions once the game starts
 def start(screen):
     shoot_btn = nextMove(
         center_position = (200,100), 
@@ -224,7 +225,8 @@ def start(screen):
     buttons = RenderUpdates(shoot_btn, hide_btn, quit_btn, return_btn)
     
     return game_loop(screen,buttons)
-   
+
+# defining elements on the about page
 def about_screen(screen):
     return_btn = nextMove(
         center_position=(300, 400),
@@ -235,7 +237,7 @@ def about_screen(screen):
         action=GameState.Title,
     )
     
-    info_btn = nextMove(
+    info = nextMove(
         center_position = (300,50),
         font_size=30,
         bg_rgb=None,
@@ -244,7 +246,7 @@ def about_screen(screen):
         action=None,
         )
     
-    info2_btn = nextMove(
+    info2 = nextMove(
         center_position = (300,100),
         font_size = 22,
         bg_rgb=None,
@@ -253,7 +255,7 @@ def about_screen(screen):
         action=None,
         )
     
-    info3_btn = nextMove(
+    info3 = nextMove(
         center_position= (300,150),
         font_size=30,
         bg_rgb=None,
@@ -262,10 +264,48 @@ def about_screen(screen):
         action=None,
         )
     
-    buttons = RenderUpdates(return_btn, info_btn, info2_btn, info3_btn)
+    info4 = nextMove(
+        center_position= (300,200),
+        font_size=15,
+        bg_rgb=None,
+        text_rgb=BLACK,
+        text="Both shoot = 1 point",
+        action=None,
+        )
+    
+    info5 = nextMove(
+        center_position= (300,225),
+        font_size=15,
+        bg_rgb=None,
+        text_rgb=BLACK,
+        text="Both ignore = 2 points",
+        action=None,
+        )
+    
+    info6 = nextMove(
+        center_position= (300,250),
+        font_size=15,
+        bg_rgb=None,
+        text_rgb=BLACK,
+        text="Only you shoot = 4 points",
+        action=None,
+        )
+    
+    info7 = nextMove(
+        center_position= (300,275),
+        font_size=15,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Only you ignore = -1 points",
+        action=None,
+        )
+    
+
+    buttons = RenderUpdates(return_btn, info, info2, info3, info4, info5, info6, info7)
     
     return game_loop(screen, buttons)
 
+#Running the completed function
 main()
 
 
