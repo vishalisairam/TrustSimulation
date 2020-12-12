@@ -86,19 +86,28 @@ class nextMove(Sprite):
 #5 Defining the elements on the screen
 class GameState(Enum):
     Quit = -1
-    Start = 0
+    Title = 0
+    Start = 1
+    Aboutpage = 2
+    Simulation = 3
 
 #5 Initialising pygame
 def main():
     pygame.init()
     width, height = 640, 480
     screen=pygame.display.set_mode((width, height))
-    game_state = GameState.Start
+    game_state = GameState.Title
     
     while True:
+        if game_state == GameState.Title:
+            game_state = title_screen(screen)
+
         if game_state == GameState.Start:
             game_state = start(screen)
         
+        if game_state == GameState.Aboutpage:
+            game_state = about_screen(screen)
+
         if game_state == GameState.Quit:
             pygame.quit()
             return
@@ -124,6 +133,57 @@ def game_loop(screen, buttons):
             buttons.draw(screen)
        
         pygame.display.flip()
+
+def title_screen(screen):
+    welcome_btn = nextMove(
+        center_position = (300,100), 
+        font_size=35, 
+        bg_rgb=None, 
+        text_rgb=RED,
+        text="Welcome Player!",
+        action=None
+        )
+
+    start_btn = nextMove(
+        center_position=(300, 200),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Start",
+        action=GameState.Start,
+    )
+    
+    sim_btn = nextMove(
+        center_position = (300,250),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Simulation",
+        action=None,
+        )
+    
+    about_btn = nextMove(
+        center_position=(300,300),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="About",
+        action=GameState.Aboutpage,
+    )
+        
+    quit_btn = nextMove(
+        center_position=(300, 350),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Quit",
+        action=GameState.Quit,
+    )
+    
+    buttons = RenderUpdates(welcome_btn, start_btn, sim_btn, about_btn, quit_btn)
+    
+    return game_loop(screen, buttons)
+
 
 def start(screen):
     shoot_btn = nextMove(
@@ -152,10 +212,59 @@ def start(screen):
         text="Quit",
         action=GameState.Quit)
     
-    buttons = RenderUpdates(shoot_btn, hide_btn, quit_btn)
+    return_btn = nextMove(
+        center_position=(125, 450),
+        font_size=20,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Return to main menu",
+        action=GameState.Title,
+    )
+    
+    buttons = RenderUpdates(shoot_btn, hide_btn, quit_btn, return_btn)
     
     return game_loop(screen,buttons)
    
+def about_screen(screen):
+    return_btn = nextMove(
+        center_position=(300, 400),
+        font_size=20,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Return to main menu",
+        action=GameState.Title,
+    )
+    
+    info_btn = nextMove(
+        center_position = (300,50),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Here is how the game goes:",
+        action=None,
+        )
+    
+    info2_btn = nextMove(
+        center_position = (300,100),
+        font_size = 22,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="You are armed and you see an armed opponent",
+        action=None,
+        )
+    
+    info3_btn = nextMove(
+        center_position= (300,150),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Will you shoot or not?",
+        action=None,
+        )
+    
+    buttons = RenderUpdates(return_btn, info_btn, info2_btn, info3_btn)
+    
+    return game_loop(screen, buttons)
 
 main()
 
