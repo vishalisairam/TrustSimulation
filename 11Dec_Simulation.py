@@ -17,14 +17,13 @@ Created on Mon Nov 30 08:08:01 2020
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-from enum import Enum
 # from itertools import izip
 
 #totalturns = int(input("Please enter a number of turns."))
 totalturns = 1
 
 
-numberturns = 5
+numberturns = 3
 # initial variables
 
 def transpose(seqseq): #simple 2-dimensional transpose
@@ -224,76 +223,38 @@ for  i in list_tft:
 
 len(player_list)        
      
-# class GameRound:
-#     def __init__(self, players, payoffmat):
-#         self.players = players
-#         self.payoffmat = payoffmat
-
-#     def run(self):
-#         payoff_matrix = self.payoffmat
-#         for player1, player2 in random_pairs_of(self.players):
-        
-#             game = CDIGame(player1, player2, payoff_matrix)
-#             game.run()
-#             payoffs = game.payoff()
-#             print("This player is a", player1.get_type())
-#             print("This player is a", player2.get_type())
-#             print ("Player1 payoff: ", payoffs[player1])
-#             print ("Player2 payoff: ", payoffs[player2])
-#             # print(getattr(player1,'choose_next_type'))
-#             # print(getattr(player2,'choose_next_type'))
-#             # print(type1)
-#             # print(type2)
-#             # if type1 == type2:
-#             #     print("Yes")
-#             # else:
-#             #     print("Nope")
-        
-            
-#             # if SoupPlayer.type(character) == "Cooperator":
-#             #     coop_payoff.append(payoffs[player1])
-#             # if SoupPlayer.type(character) == "Defector":
-#             #     def_payoff.append(payoffs[player1])
-            
-    
-
 
 PAYOFFMAT = [ [(3,3),(0,5)],[(5,0),(1,1)] ]  
 
 listoftotalturns = list(range(0,totalturns))
 
 for i in listoftotalturns: 
+    player1dict = {}
+    player2dict = {}
     for player1, player2 in random_pairs_of(player_list):
+        print("This is a new game")
         game = CDIGame(player1, player2, PAYOFFMAT)
         game.run()
         payoffs = game.payoff()
+        player1dict[player1.playertype] = sum(payoffs[player1])
+        player2dict[player2.playertype] = sum(payoffs[player2])
         print ("Player1 payoff: ", (payoffs[player1]))
         print ("Player2 payoff: ", (payoffs[player2]))
         print("This player is a", player1.playertype)
         print("This player is a", player2.playertype)
-        # for i in game.run():
-        #    payoff1 = []
-        #    payoff2 = [] 
-        #    payoff1.append(payoffs[player1])
-        #    payoff2.append(payoffs[player2])       
-        #    print(payoff1)
-        #    print(payoff2) 
+  
         
-       
-        
-        
+coop_score = []
+def_score = []
+random_score= []
+tft_score = []
+grud_score = []
 
 
-    
+
+print(player1dict)
 
 
-# coop_payoff = 0
-#         def_payoff = 0
-#         if player1.playertype == "Cooperator":
-#             coop_payoff += payoffs[player1]
-#         elif player2.playertype == "Cooperator":
-#             coop_payoff += payoffs[player2]
-#         if player1.playertype == "Defector":
-#             def_payoff = def_payoff + payoffs[player1]
-#         elif player2.playertype == "Defector":
-#             def_payoff += payoffs[player2]
+
+         
+
