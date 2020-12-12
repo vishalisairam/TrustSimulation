@@ -123,7 +123,6 @@ def random_pairs_of(players):
     player_iter = iter(players)
     return zip(player_iter, player_iter)
 
-
 def random_pair(players):
     for i in players:
         players = player_list
@@ -132,16 +131,6 @@ def random_pair(players):
         player_iter = iter(players)
         player_iter_2 = next(iter(players))
         return zip(player_iter,player_iter_2)
-        # newlist.append(player_iter,player_iter)
-        # while player_iter not in newlist:
-        #     if len(newlist) != 100:
-        #         player_iter = next(iter(players))
-        #         return zip(player_iter, player_iter)
-        #         random.sample(players,2)
-        #     else:
-        #         break
-
-
             
 class GamePlayer(SimplePlayer):
     def evolve(self):
@@ -156,7 +145,6 @@ class GamePlayer(SimplePlayer):
         return (self.playertype for game in self.games_played)
     def choose_next_type(self):
         # find the playertype(s) producing the highest score(s)
-        #best_playertypes = topscore_playertypes(self)
         # choose randomly from these best playertypes
         self.next_playertype = random.shuffle(player_list), random.shuffle(player_list)
 
@@ -229,20 +217,7 @@ class GameRound:
             player2.get_type()
             print ("Player1 payoff: ", payoffs[player1])
             print ("Player2 payoff: ", payoffs[player2])
-            # print(getattr(player1,'choose_next_type'))
-            # print(getattr(player2,'choose_next_type'))
-            # print(type1)
-            # print(type2)
-            # if type1 == type2:
-            #     print("Yes")
-            # else:
-            #     print("Nope")
-        
             
-            # if SoupPlayer.type(character) == "Cooperator":
-            #     coop_payoff.append(payoffs[player1])
-            # if SoupPlayer.type(character) == "Defector":
-            #     def_payoff.append(payoffs[player1])
             
     
 

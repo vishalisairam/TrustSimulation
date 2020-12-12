@@ -87,6 +87,7 @@ class GameState(Enum):
     TITLE = 0
     NEWGAME = 1
     ABOUTPAGE = 2
+    SIMULATION = 3
 
 def main():
     pygame.init()
@@ -100,6 +101,9 @@ def main():
             
         if game_state == GameState.NEWGAME:
             game_state = play_level(screen)
+            
+        if game_state == GameState.SIMULATION:
+            game_state = simulation(screen)
             
         if game_state == GameState.ABOUTPAGE:
             game_state = about_screen(screen)
@@ -127,8 +131,17 @@ def title_screen(screen):
         action=GameState.NEWGAME,
     )
     
+    sim_btn = UIElement(
+        center_position=(600, 250),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Simulation",
+        action=GameState.SIMULATION,
+    )
+
     about_btn = UIElement(
-        center_position=(600,250),
+        center_position=(600,300),
         font_size=30,
         bg_rgb=None,
         text_rgb=RED,
@@ -137,7 +150,7 @@ def title_screen(screen):
     )
         
     quit_btn = UIElement(
-        center_position=(600, 300),
+        center_position=(600, 350),
         font_size=30,
         bg_rgb=None,
         text_rgb=RED,
@@ -145,7 +158,7 @@ def title_screen(screen):
         action=GameState.QUIT,
     )
     
-    buttons = [welcome_btn, start_btn, about_btn, quit_btn]
+    buttons = [welcome_btn, start_btn, sim_btn, about_btn, quit_btn]
     
     while True:
         mouse_up = False
@@ -188,6 +201,40 @@ def play_level(screen):
   
 
 def about_screen(screen):
+    information = UIElement( 
+        center_position=(600,100),
+        font_size=30,
+        bg_rgb=None,
+        text_rgb=RED,
+        text="Based on the theory of the prioners dilemma, this trust game ventures to guage hoe much you trust you opponent/n",
+        action=None,
+        )
+    
+    return_btn = UIElement(
+        center_position=(140, 570),
+        font_size=20,
+        bg_rgb=None,
+        text_rgb=BLACK,
+        text="Return to main menu",
+        action=GameState.TITLE,
+    )
+    
+    buttons = [information, return_btn]
+    while True:
+        mouse_up = False
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                mouse_up = True
+        screen.blit(bg, [0,0])
+
+        ui_action = buttons.update(pygame.mouse.get_pos(), mouse_up)
+        if ui_action is not None:
+            return ui_action
+        buttons.draw(screen)
+
+        pygame.display.flip()  
+
+def simulation(screen):
     return_btn = UIElement(
         center_position=(140, 570),
         font_size=20,
@@ -209,7 +256,6 @@ def about_screen(screen):
             return ui_action
         return_btn.draw(screen)
 
-        pygame.display.flip()  
-
+        pygame.display.flip()
     
 main()
