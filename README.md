@@ -1,6 +1,6 @@
 # TrustSimulation
 
-Comments for submission
+Comments for submission (Please look at the 'Final' Folder)
 
 A. We had planned three components to our project:
 - The Interactive Game with human input
@@ -11,6 +11,12 @@ B. We completed the game and simulation as programs and we also have a basic str
 
 C. However, we struggled with merging the final game and simulation codes with the respective GUI codes. The Human Input for both the Game and Simulation work in the console but not with the GUI. 
 - In the Game, '0' is Cooperate and '1' is defect. 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 Python Blueprint
 
