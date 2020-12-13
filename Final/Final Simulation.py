@@ -85,7 +85,7 @@ print("""
       
       
       
-  \n Hint: Choose an equal number of players of each playertype and then replay the game with small sucessive tweaks to see how points across plaeyrtypes / total points change.
+  \n Hint: Choose an equal number of players of each playertype in the first simulation and then replay the game with small sucessive tweaks to see how points across plaeyrtypes / total points change.
        
       """)
 
@@ -258,15 +258,15 @@ tshare = [coop_score/s, def_score/s, random_score/s, tft_score/s, grud_score/s]
 
 print("\n Across", len(player_list), "players and ", totalturns, " rounds the payoffs earned by each playertype (total and share of total) is: \n")
 
-print("Cooperator: total - ", coop_score, "and share -", round(coop_score/s, 2))
-print("Defender: total - ", def_score, "and share -", round(def_score/s,2) )
-print("Random:", random_score, "and share -", round(random_score/s,2))
-print("Tit for Tat:", tft_score, "and share -", round(tft_score/s,2))
-print("Grudger:", grud_score, "and share -", round(grud_score/s,2))
+print("Cooperator: total = ", coop_score, "and share =", round(coop_score/s, 2))
+print("Defender: total =", def_score, "and share =", round(def_score/s,2) )
+print("Random: total = ", random_score, "and share =", round(random_score/s,2))
+print("Tit for Tat: total =", tft_score, "and share =", round(tft_score/s,2))
+print("Grudger: total = ", grud_score, "and share =", round(grud_score/s,2))
 
 print("\n Check the graph above.")
 
-print("\n \n Total Payoff derived by society by", len(player_list), "players and across",totalturns," rounds is", s )
+print("\n \n Total Payoff derived by society of", len(player_list), "players and across",totalturns," rounds is", s )
 
 # Mapping the scores to playertypes using a Barplot
 
