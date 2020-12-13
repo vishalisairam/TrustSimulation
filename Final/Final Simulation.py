@@ -66,17 +66,34 @@ sp_playertft.playertype == "Tit for Tat"
 
 # get input for percentage of each player 
 
-print(""" Please enter the proportion of each playertype between 0-100 (e.g. 20)
+
+
+print(""" 
+      \nWELCOME TO A SIMULATION OF TRUST. 
       
-  Hint: Choose an equal number of people in each playertype and then replay the game with small sucessive tweaks to see how points across plaeyrtypes / total points change.
+      \nYou can choose upto five playertypes in this simulation. 
+      
+     Remember:
+          
+          A. A Cooperator will almost never cheat
+          B. A Defector will almost always cheat
+          C. A Tit for Tat will just follow his earlier opponent
+          D. A Grudger will mostly cooperate until she is cheated. Then she will mostly cheat. 
+          E. A Random player has no preference towards cheating or cooperating
+      
+      \n\n Please enter the proportion of each playertype between 0-100 (e.g. 20)
+      
+      
+      
+  \n Hint: Choose an equal number of players of each playertype and then replay the game with small sucessive tweaks to see how points across plaeyrtypes / total points change.
        
       """)
 
 perc_coop = int(input("Enter the proportion of Cooperators: "))
 perc_defect = int(input("Enter the proportion of Defectors: "))
-perc_random = int(input("Enter the proportion of Random: "))
-perc_grudger = int(input("Enter the proportion of Grudger: "))
 perc_tft = int(input("Enter the proportion of Tit for Tat: "))
+perc_grudger = int(input("Enter the proportion of Grudger: "))
+perc_random = int(input("Enter the proportion of Random: "))
 
 
 list_coop = list(range(1,(perc_coop*10+ 1)))
@@ -136,9 +153,9 @@ One cheats while the other does not cheat: 4 to player who cheats, -1 to player 
 
 PAYOFFMAT = [ [(2,2),(-1,4)],[(4,-1),(1,1)] ]  
 
-print("\n Now please enter the number of rounds in the simulation. A new round will create new random pairs of players and allow them to play with each other ")
+print("\nNow please enter the number of rounds in the simulation. A new round will create new random pairs of players and allow them to play with each other ")
 
-totalturns = int(input("Enter the number of turns: "))
+totalturns = int(input("Enter the number of rounds: "))
 
 listoftotalturns = list(range(0,totalturns))
 
@@ -239,7 +256,7 @@ s = coop_score +  def_score + random_score + tft_score + grud_score
 tshare = [coop_score/s, def_score/s, random_score/s, tft_score/s, grud_score/s]
 
 
-print("Across", len(player_list), "and ", totalturns, " the payoffs earned by each playertype (total and share of total) is: \n")
+print("\n Across", len(player_list), "players and ", totalturns, " rounds the payoffs earned by each playertype (total and share of total) is: \n")
 
 print("Cooperator: total - ", coop_score, "and share -", round(coop_score/s, 2))
 print("Defender: total - ", def_score, "and share -", round(def_score/s,2) )
@@ -249,7 +266,7 @@ print("Grudger:", grud_score, "and share -", round(grud_score/s,2))
 
 print("\n Check the graph above.")
 
-print("\n \n Total Payoff derived by society across", len(player_list), " players and across ", totalturns, "is", s )
+print("\n \n Total Payoff derived by society by", len(player_list), "players and across",totalturns," rounds is", s )
 
 # Mapping the scores to playertypes using a Barplot
 
@@ -258,9 +275,9 @@ t = [coop_score, def_score, random_score, tft_score, grud_score]
 t_pos = ['Cooperator', 'Defender', 'Random', 'Tit for Tat', 'Grudger']
 
 plt.bar(t_pos, t, color='green')
-plt.xlabel("Payoff")
+plt.xlabel("Points")
 plt.ylabel("Players")
-plt.title("Payoffs across Players")
+plt.title("Points across Players")
 plt.show()
 
 # Plot 2
@@ -268,9 +285,9 @@ plt.show()
 tshare_pos = ['Cooperator', 'Defender', 'Random', 'Tit for Tat', 'Grudger']
 
 plt.bar(tshare_pos, tshare, color='red')
-plt.xlabel(" Share of Payoffs")
+plt.xlabel(" Share of Points")
 plt.ylabel("Players")
-plt.title("Share of Payoffs across Players")
+plt.title("Share of Points across Players")
 plt.show()
          
 
