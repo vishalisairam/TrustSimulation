@@ -4,7 +4,7 @@ Comments for submission (Please look at the 'Final' Folder)
 
 A. We had planned three components in our project:
 - Interactive Game with human input
-- Simulation with input on proportion on playertypes and number of turns
+- Simulation with input on proportion of playertypes and number of turns
 - GUI for presentation
 
 B. We completed the game and simulation as programs and we also have a basic structure for the GUI (Pygame GUI for the Game and tkinter GUI for Simulation)
